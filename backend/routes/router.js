@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+let countyData
+
 const users = [
   {
     firstName: "first1",
@@ -19,6 +21,21 @@ const users = [
   }
 ];
 
+async function getIreland() {
+  try{
+    const res = await fetch('https://restcountries.com/v3.1/all', {
+    method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let countyData = await res.json();
+    return countyData;
+  } catch (error) {
+    throw error;
+  }
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Countries Backend' });
@@ -33,9 +50,10 @@ router.get('/users', (req, res) => {
   res.json(users);
 });
 
-router.post('/users', (req, res) => {
-  console.log('api/users called!')
-  res.json(users);
+//! Returns black page, needs to be fixed
+router.get('/ireland', async (req, res) => {
+  getIreland()
+  res.json(countyData)
 });
 
 module.exports = router;
