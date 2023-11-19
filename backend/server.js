@@ -8,7 +8,7 @@ var cors = require('cors');
 var app = express();
 
 let corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['*'],
   optionsSuccessStatus: 200
 }
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', cors(corsOptions), require('./router'));
+app.use('/', cors(), require('./router'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -33,7 +33,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
+  console.log(err)
 });
 
 module.exports = app;

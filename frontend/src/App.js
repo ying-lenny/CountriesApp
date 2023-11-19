@@ -2,26 +2,34 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Users } from './components/Users'
 import { DisplayBoard } from './components/DisplayBoard'
-import { getAllUsers, getIreland } from './api/backend';
+import { getSearchResults } from './api/backend';
 
 function App() {
 
+  const [searchInput, setSearchInput] = useState("");
+
   //frontend external api call, works fine
-  const loadCountryAPI = () =>{
+  const loadCountryAPI = (name) =>{
     // fetch url of rest country from website
     // fetch('https://restcountries.com/v3.1/all')
-    fetch('http://localhost:7000/api/ireland')
-    .then(res => res.json())
+    getSearchResults(name)
     .then(data => displayCountries(data))
 }
 
   // displaying all countries
   const displayCountries = countries =>{
-    // console.log(countries);
+    console.log(countries.status)
+    if (countries.status === 404) {
+      alert("Nothing found")
+      return
+    } else {
+      // console.log(countries);
     const countriesHTML = countries.map(country => getCountry(country));
     // displaying div to html
     const container = document.getElementById('countries');
     container.innerHTML = countriesHTML.join(' ');
+    }
+    
   }
 
   // get data and set it to html
@@ -38,45 +46,28 @@ function App() {
     `
   }
 
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchInput(e.target.value);
+  };
 
-  const [user, setUser] = useState({})
-  const [users, setUsers] = useState([])
-  const [numberOfUsers, setNumberOfUsers] = useState(0)
-
-  // frontend call to backend, works fine
-  const fetchAllUsers = () => {
-    getAllUsers()
-      .then(users => {
-        console.log(users)
-        setUsers(users);
-        setNumberOfUsers(users.length)
-      });
-  }
-
-  useEffect(() => {
-    getAllUsers()
-      .then(users => {
-        console.log(users)
-        setUsers(users);
-        setNumberOfUsers(users.length)
-      });
-  }, [])
+  const handleButton = (e) => {
+    e.preventDefault();
+    if (searchInput.length >= 3) {
+    loadCountryAPI(searchInput)
+    } else {
+      alert("Value too small")
+    }
+  };
 
   return (
     <div className="App">
-        <div className="col-md-4">
-          <DisplayBoard
-            numberOfUsers={numberOfUsers}
-            getAllUsers={fetchAllUsers}
-          />
-        </div>
-
-        <div className="row mrgnbtm">
-            <Users users={users}></Users>
-        </div>
-        <button onClick={loadCountryAPI}>
-          Hello
-        </button>
+      <form class="form">
+          <input id="search" type="text" class="input" placeholder="search..."
+            onChange={handleChange}
+            value={searchInput}/>
+          <button onClick={handleButton} id="result" class="clear-results">search</button>
+      </form>
       <div className="countries" id="countries"></div>
     </div>
   );
