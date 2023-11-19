@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-let countyData
-
 const users = [
   {
     firstName: "first1",
@@ -52,8 +50,7 @@ router.get('/users', (req, res) => {
 
 //! Returns black page, needs to be fixed
 router.get('/ireland', async (req, res) => {
-  getIreland()
-  res.json(countyData)
+  res.json(await getIreland())
 });
 
 module.exports = router;

@@ -9,7 +9,8 @@ function App() {
   //frontend external api call, works fine
   const loadCountryAPI = () =>{
     // fetch url of rest country from website
-    fetch('https://restcountries.com/v3.1/all')
+    // fetch('https://restcountries.com/v3.1/all')
+    fetch('http://localhost:7000/api/ireland')
     .then(res => res.json())
     .then(data => displayCountries(data))
 }

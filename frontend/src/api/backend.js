@@ -15,7 +15,7 @@ export async function getAllUsers() {
 
 export async function getIreland() {
   try{
-    const res = await fetch('http://localhost:7000/ireland', {
+    const res = await fetch('http://localhost:7000/api/ireland', {
     method: "GET",
       headers: {
         "Content-Type": "application/json",
