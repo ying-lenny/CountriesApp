@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { Users } from './components/Users'
-import { DisplayBoard } from './components/DisplayBoard'
 import { getSearchResults } from './api/backend';
 
 function App() {
@@ -11,7 +9,6 @@ function App() {
   //frontend external api call, works fine
   const loadCountryAPI = (name) =>{
     // fetch url of rest country from website
-    // fetch('https://restcountries.com/v3.1/all')
     getSearchResults(name)
     .then(data => displayCountries(data))
 }
