@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import './App.css';
 import { getSearchResults } from './api/backend';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
 
   const [searchInput, setSearchInput] = useState("");
+  // selecting loading div
+  const loader = document.querySelector("#loading");
 
   //frontend external api call, works fine
   const loadCountryAPI = (name) =>{
     // fetch url of rest country from website
     getSearchResults(name)
-    .then(data => displayCountries(data))
+    .then(data => {
+      hideLoading()
+      displayCountries(data)})
 }
 
   // displaying all countries
   const displayCountries = countries =>{
-    console.log(countries.status)
     if (countries.status === 404) {
       alert("Nothing found")
       return
@@ -26,19 +31,25 @@ function App() {
     const container = document.getElementById('countries');
     container.innerHTML = countriesHTML.join(' ');
     }
-    
   }
 
   // get data and set it to html
   const getCountry = (country) =>{
+    const currencyArray = Object.values(country.currencies)
+    const languageArray = Object.values(country.languages)
+    
     return `
         <div className="country-div">
-        <img src="${country.flags.png}">
-        <h2>${country.name.common}</h2>
-        <hr>
-        <h4>Population: ${country.population}</h4>
-        <h4>Regoin: ${country.region}</h4>
-        <h4>Capital: ${country.capital}</h4>
+          <img src="${country.flags.png}">
+          <div class="country-div-details">
+            <h1>${country.name.common}</h1>
+            <h3>Population: ${(country.population).toLocaleString()}</h3>
+            <h3>Region: ${country.region}</h3>
+            <h3>Capital: ${country.capital}</h3>
+            <h3>Main Language: ${languageArray[0]}</h3>
+            <h3>Currency: ${currencyArray[0].symbol} | ${currencyArray[0].name}</h3>
+          </div>
+          
         </div>
     `
   }
@@ -49,22 +60,37 @@ function App() {
   };
 
   const handleButton = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (searchInput.length >= 3) {
+    displayLoading()
     loadCountryAPI(searchInput)
     } else {
       alert("Value too small")
     }
   };
 
+  function displayLoading() {
+    loader.classList.add("display");
+    // to stop loading after some time
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 5000);
+  }
+
+  // hiding loading 
+  function hideLoading() {
+    loader.classList.remove("display");
+  }
+
   return (
     <div className="App">
-      <form class="form">
-          <input id="search" type="text" class="input" placeholder="search..."
-            onChange={handleChange}
-            value={searchInput}/>
-          <button onClick={handleButton} id="result" class="clear-results">search</button>
+      <form className="form">
+        <input id="search" type="text" className="input" placeholder="Enter a country..."
+          onChange={handleChange}
+          value={searchInput}/>
+        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={handleButton} id="result" className="clear-results" />
       </form>
+      <div id="loading">Loading...</div>
       <div className="countries" id="countries"></div>
     </div>
   );
