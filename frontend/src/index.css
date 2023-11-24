@@ -68,6 +68,7 @@ h1{
 img{
   width: 100%;
   height: 150px;
+  border: 2px solid gray;
 }
 
 /* now do styles as much as you want */

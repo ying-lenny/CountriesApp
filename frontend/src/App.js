@@ -60,7 +60,7 @@ function App() {
   };
 
   const handleButton = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     if (searchInput.length >= 3) {
     displayLoading()
     loadCountryAPI(searchInput)
@@ -84,7 +84,7 @@ function App() {
 
   return (
     <div className="App">
-      <form className="form">
+      <form className="form" onSubmit={handleButton}>
         <input id="search" type="text" className="input" placeholder="Enter a country..."
           onChange={handleChange}
           value={searchInput}/>
