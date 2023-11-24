@@ -1,6 +1,6 @@
 export async function getSearchResults(result) {
   try{
-    const res = await fetch('http://localhost:7000/results', {
+    const res = await fetch('http://localhost:7000/api/results', {
     method: "POST",
       headers: {
         "Content-Type": "application/json",
