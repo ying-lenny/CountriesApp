@@ -1,6 +1,6 @@
 export async function getSearchResults(result) {
   try{
-    const res = await fetch('http://localhost:7000/api/results', {
+    const res = await fetch('https://countriesapp-ggwg.onrender.com/api/results', {
     method: "POST",
       headers: {
         "Content-Type": "application/json",
