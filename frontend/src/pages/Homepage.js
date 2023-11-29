@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import './App.css';
 import { getSearchResults } from '../api/backend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faHouse } from '@fortawesome/free-solid-svg-icons'
@@ -88,11 +87,11 @@ function Homepage() {
   return (
     <div className="App">
       <form className="form" onSubmit={handleButton}>
-        <FontAwesomeIcon icon={faHouse} size="2xl" onClick={handleClick} id="home"/>
+        <FontAwesomeIcon icon={faHouse} size="2xl" onClick={handleClick} className='icon'/>
         <input id="search" type="text" className="input" placeholder="Enter a country..."
           onChange={handleChange}
           value={searchInput}/>
-        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={handleButton} id="search"/>
+        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={handleButton} className='icon'/>
       </form>
       <div id="loading">Loading...</div>
       <div className="countries" id="countries"></div>
