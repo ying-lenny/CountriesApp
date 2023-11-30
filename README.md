@@ -6,6 +6,10 @@ A JavaScript application made using React for the frontend, and Node and Express
 - Frontend: https://ying-lenny.github.io/CountriesApp/
 - Backend: https://countriesapp-ggwg.onrender.com/
 
+The frontend is hosted using GitHub Pages and the backend is hosted on Vercel
+
+The backend will have to be loaded before the search functionality on the frontend works as it is being hosted on Vercel with aggresively puts unused apps to sleep so please be sure to load it and wait for confetti to appear before searching. 
+
 ## Running Locally
 To run locally after downloading the application
 
