@@ -71,8 +71,27 @@ img{
   border: 2px solid gray;
 }
 
-/* now do styles as much as you want */
-/* add media query for responsive */
+.header {
+  width: 100vw;
+  display: flex;
+}
+
+.header-link {
+  display: block;
+  background-color: black;
+  color: white;
+  width: 50%;
+  padding: 1em;
+  text-decoration: none;
+  border: 1px solid white;
+  transition: 0.5s;
+}
+
+.header-link:hover {
+  width: 60%;
+  background-color: darkgray;
+}
+
 @media screen and (max-width: 576px){
   .countries{
       grid-template-columns: repeat(1, 1fr);

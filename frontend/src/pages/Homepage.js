@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getSearchResults } from '../api/backend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faHouse } from '@fortawesome/free-solid-svg-icons'
+import Disclaimer from '../Components/Disclaimer';
 
 function Homepage() {
 
@@ -73,10 +74,6 @@ function Homepage() {
 
   function displayLoading() {
     loader.classList.add("display");
-    // to stop loading after some time
-    setTimeout(() => {
-        loader.classList.remove("display");
-    }, 5000);
   }
 
   // hiding loading 
@@ -86,6 +83,7 @@ function Homepage() {
 
   return (
     <div className="App">
+      <Disclaimer/>
       <form className="form" onSubmit={handleButton}>
         <FontAwesomeIcon icon={faHouse} size="2xl" onClick={handleClick} className='icon'/>
         <input id="search" type="text" className="input" placeholder="Enter a country..."
