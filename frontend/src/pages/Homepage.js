@@ -10,7 +10,7 @@ function Homepage() {
   // selecting loading div
   const loader = document.querySelector("#loading");
 
-  //frontend external api call, works fine
+  //Frontend call to backend to get list of countries
   const loadCountryAPI = (name) =>{
     // fetch url of rest country from website
     getSearchResults(name)
@@ -21,6 +21,7 @@ function Homepage() {
 
   // displaying all countries
   const displayCountries = countries =>{
+    // Catches error on return
     if (countries.status === 404) {
       alert("Nothing found")
       return
@@ -48,35 +49,40 @@ function Homepage() {
             <h3>Main Language: ${languageArray[0]}</h3>
             <h3>Currency: ${currencyArray[0].symbol} | ${currencyArray[0].name}</h3>
           </div>
-          
         </div>
     `
   }
 
-  const handleChange = (e) => {
+  // As text is entered into searchbox, the searchInput value is updated
+  const updateSearchString = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
   };
 
-  const handleButton = (e) => {
+  // Takes entered string and posts to backend if it's valid
+  const searchPrompt = (e) => {
     e.preventDefault();
+    //If string is over 3 characters, it is valid
     if (searchInput.length >= 3) {
     displayLoading()
     loadCountryAPI(searchInput)
+    // If under 3 characters, it is invalid
     } else {
       alert("Value too small")
     }
   };
 
-  function handleClick() {
+  // Refreshes page on click
+  function refreshPage() {
     window.location.reload();
   }
 
+  // Displays loading class upon searching for countries
   function displayLoading() {
     loader.classList.add("display");
   }
 
-  // hiding loading 
+  // hides loading upon search results returning
   function hideLoading() {
     loader.classList.remove("display");
   }
@@ -84,14 +90,17 @@ function Homepage() {
   return (
     <div className="App">
       <Disclaimer/>
-      <form className="form" onSubmit={handleButton}>
-        <FontAwesomeIcon icon={faHouse} size="2xl" onClick={handleClick} className='icon'/>
+      <form className="form" onSubmit={searchPrompt}>
+        <FontAwesomeIcon icon={faHouse} size="2xl" onClick={refreshPage} className='icon'/>
         <input id="search" type="text" className="input" placeholder="Enter a country..."
-          onChange={handleChange}
+          onChange={updateSearchString}
           value={searchInput}/>
-        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={handleButton} className='icon'/>
+        <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={searchPrompt} className='icon'/>
       </form>
-      <div id="loading">Loading...</div>
+      <div id="loading">
+        Loading... <br/>
+        If loading is taking too long, please try revisiting the live backend and refreshing it
+      </div>
       <div className="countries" id="countries"></div>
     </div>
   );
